@@ -1,0 +1,43 @@
+<header>This is a header.</header>
+<footer>This is a footer.</footer>
+<nav>This is a navigation bar.</nav>
+<main>This is the main content.</main>
+<section>This is a section.</section>
+<article>This is an article.</article>
+<aside>This is an aside.</aside>
+<div>This is a division.</div>
+<span>This is a span.</span>
+<h1>This is a level 1 heading.</h1>
+<p>This is a paragraph.</p>
+<a href="https://example.com">This is a link.</a>
+<img src="image.jpg" alt="Image" />
+<video>This is a video.</video>
+<audio>This is audio content.</audio>
+<ul><li>Item 1</li><li>Item 2</li></ul>
+<ol><li>Item 1</li><li>Item 2</li></ol>
+<dl><dt>Term 1</dt><dd>Description 1</dd></dl>
+<table><tr><th>Header 1</th><th>Header 2</th></tr><tr><td>Data 1</td><td>Data 2</td></tr></table>
+<form><input type="text" /><button>Submit</button></form>
+<blockquote>This is a quote.</blockquote>
+<code>This is a code block.</code>
+<pre>This is preformatted text.</pre>
+<abbr>This is an abbreviation.</abbr>
+<address>This is an address.</address>
+<hr />
+<br />
+<em>This is emphasized text.</em>
+<strong>This is strong text.</strong>
+<mark>This is highlighted text.</mark>
+<small>This is small text.</small>
+<sub>This is subscripted text.</sub>
+<sup>This is superscripted text.</sup>
+<del>This is deleted text.</del>
+<ins>This is inserted text.</ins>
+<q>This is a quotation.</q>
+<time>2022-04-01</time>
+<progress>70%</progress>
+<meter value="5" min="0" max="10">5 out of 10</meter>
+<details><summary>Details</summary>Additional details.</details>
+<iframe src="https://example.com"></iframe>
+<canvas>This is a canvas.</canvas>
+<svg>This is an SVG.</svg>
