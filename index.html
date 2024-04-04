@@ -23,6 +23,7 @@
                 'main': '<main>{content}</main>',
                 'section': '<section>{content}</section>',
                 'meta-info': '<meta-info>{content}</meta-info>',
+                'link': '<a href="{url}">{content}</a>',
                 'big-h': '<h1>{content}</h1>',
                 'medium-h': '<h2>{content}</h2>',
                 'h': '<h3>{content}</h3>',
@@ -30,7 +31,6 @@
                 'tx': '<p>{content}</p>',
                 'table': '<table>{content}</table>',
                 'pic': '<img alt="{alt}" src="{src}">',
-                'link': '<a href="{url}">{content}</a>',
                 'embed': '<embed src="{href}"></embed>'
             };
 
@@ -41,10 +41,10 @@
                     // Replace placeholders in the HTML equivalent with actual content
                     var htmlEquivalent = elementMappings[tag]
                         .replace('{content}', content)
+                        .replace('{url}', extractAttributeValue(content, 'url'))
                         .replace('{alt}', extractAttributeValue(content, 'alt'))
                         .replace('{src}', extractAttributeValue(content, 'src'))
-                        .replace('{url}', extractAttributeValue(content, 'url')); // Use 'url' for the link element
-                        .replace('{href}', extractAttributeValue(content, 'href')); // Use 'href' for the embed element
+                        .replace('{href}', extractAttributeValue(content, 'href'));
                     return htmlEquivalent;
                 } else {
                     // If not mapped, return the original match
@@ -58,9 +58,9 @@
 
         // Helper function to extract attribute value from a string
         function extractAttributeValue(content, attributeName) {
-            var regex = new RegExp(attributeName + '="([^"]*)|(\'.+\')'); // Capture values in both double and single quotes
+            var regex = new RegExp(attributeName + '="([^"]*)"');
             var match = regex.exec(content);
-            return match ? match[1] : (match ? match[2] : ''); // Use captured value (including quotes)
+            return match ? match[1] : '';
         }
     </script>
 </body>
