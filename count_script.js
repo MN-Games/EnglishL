@@ -6,7 +6,7 @@ async function countTextOccurrences(url, searchText) {
         const text = await response.text();
         
         // Count occurrences of the specified text
-        const occurrences = text.match(new RegExp(searchText, 'gi')).length;
+        const occurrences = (text.match(new RegExp(searchText, 'gi')) || []).length;
         
         return occurrences;
     } catch (error) {
@@ -22,18 +22,16 @@ function displayOccurrencesCount(count, searchText) {
 }
 
 // Form submission event listener
-document.getElementById('searchForm').addEventListener('submit', function(event) {
+document.getElementById('searchForm').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent default form submission
 
     const url = document.getElementById('urlInput').value;
     const searchText = document.getElementById('textInput').value;
 
-    countTextOccurrences(url, searchText)
-        .then(count => {
-            if (count >= 0) {
-                displayOccurrencesCount(count, searchText);
-            } else {
-                console.log('Failed to fetch URL or count occurrences.');
-            }
-        });
+    const count = await countTextOccurrences(url, searchText);
+    if (count >= 0) {
+        displayOccurrencesCount(count, searchText);
+    } else {
+        console.log('Failed to fetch URL or count occurrences.');
+    }
 });
