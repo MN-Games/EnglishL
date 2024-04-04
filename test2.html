@@ -3,23 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Text Occurrence Counter</title>
+<title>Fetch Source Code</title>
 </head>
 <body>
-<h1>Text Occurrence Counter</h1>
+<h1>Fetch Source Code</h1>
 
-<form id="searchForm">
-    <label for="urlInput">Enter URL:</label>
-    <input type="text" id="urlInput" placeholder="Enter URL...">
-    <br>
-    <label for="textInput">Enter Text:</label>
-    <input type="text" id="textInput" placeholder="Enter text...">
-    <br>
-    <button type="submit">Count Occurrences</button>
-</form>
+<button id="fetchButton">Fetch Source Code</button>
+<div id="sourceCode"></div>
 
-<div id="result"></div>
+<script>
+async function fetchSourceCode(url) {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch: ${response.status} ${response.statusText}`);
+        }
+        const sourceCode = await response.text();
+        return sourceCode;
+    } catch (error) {
+        console.error('Error fetching source code:', error);
+        return null;
+    }
+}
 
-<script src="count_script.js"></script>
+document.getElementById('fetchButton').addEventListener('click', async function() {
+    const url = 'https://www.example.com'; // Replace with your desired URL
+    const sourceCode = await fetchSourceCode(url);
+    if (sourceCode !== null) {
+        document.getElementById('sourceCode').textContent = sourceCode;
+    } else {
+        document.getElementById('sourceCode').textContent = 'Failed to fetch source code.';
+    }
+});
+</script>
 </body>
 </html>
