@@ -30,6 +30,7 @@
                 'tx': '<p>{content}</p>',
                 'table': '<table>{content}</table>',
                 'pic': '<img alt="{alt}" src="{src}">',
+                'link': '<a href="{url}">{content}</a>',
                 'embed': '<embed src="{href}"></embed>'
             };
 
@@ -42,7 +43,8 @@
                         .replace('{content}', content)
                         .replace('{alt}', extractAttributeValue(content, 'alt'))
                         .replace('{src}', extractAttributeValue(content, 'src'))
-                        .replace('{href}', extractAttributeValue(content, 'url')); // Use 'url' for the link element
+                        .replace('{url}', extractAttributeValue(content, 'url')) // Use 'url' for the link element
+                        .replace('{href}', extractAttributeValue(content, 'href')); // Use 'href' for the embed element
                     return htmlEquivalent;
                 } else {
                     // If not mapped, return the original match
