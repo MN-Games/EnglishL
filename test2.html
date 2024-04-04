@@ -3,44 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chrome Extension Demo</title>
+<title>Text Occurrence Counter</title>
 </head>
 <body>
-<h1>Chrome Extension Demo</h1>
-<button id="blockedURLButton">Blocked URL</button>
-<button id="blockedTextButton">Blocked Text</button>
+<h1>Text Occurrence Counter</h1>
 
-<script>
-// Define the script for blocking functionality
+<form id="searchForm">
+    <label for="urlInput">Enter URL:</label>
+    <input type="text" id="urlInput" placeholder="Enter URL...">
+    <br>
+    <label for="textInput">Enter Text:</label>
+    <input type="text" id="textInput" placeholder="Enter text...">
+    <br>
+    <button type="submit">Count Occurrences</button>
+</form>
 
-// Function to redirect to a different URL
-function redirect(url) {
-    window.location.href = url;
-}
+<div id="result"></div>
 
-// Event listener for the button leading to a blocked URL
-document.getElementById("blockedURLButton").addEventListener("click", function() {
-    // Simulating a blocked URL
-    // You can replace this with actual logic to check the URL
-    // and perform redirection if necessary
-    const blockedURL = "vercel.com";
-    const redirectURL = "https://google.com";
-    if (window.location.href.includes(blockedURL)) {
-        redirect(redirectURL);
-    }
-});
-
-// Event listener for the button containing blocked text
-document.getElementById("blockedTextButton").addEventListener("click", function() {
-    // Simulating blocked text
-    // You can replace this with actual logic to scan the page content
-    // and perform redirection if necessary
-    const blockedText = "Example Domain";
-    const redirectURL = "https://example.com";
-    if (document.body.innerText.includes(blockedText)) {
-        redirect(redirectURL);
-    }
-});
-</script>
+<script src="count_script.js"></script>
 </body>
 </html>
