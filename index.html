@@ -6,12 +6,15 @@
     <title>Custom Language Parser</title>
 </head>
 <body>
-    <textarea id="inputText" rows="10" cols="50"></textarea>
-    <button onclick="parseCustomLanguage()">Parse</button>
-    <div id="output"></div>
+    <form id="inputForm">
+        <textarea id="inputText" rows="10" cols="50"></textarea>
+        <button type="submit">Parse</button>
+    </form>
 
     <script>
-        function parseCustomLanguage() {
+        document.getElementById('inputForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+
             // Get the input text
             var inputText = document.getElementById('inputText').value;
 
@@ -52,9 +55,9 @@
                 }
             });
 
-            // Display the HTML output
-            document.getElementById('output').innerHTML = htmlOutput;
-        }
+            // Redirect to test1.html with the HTML content as a query parameter
+            window.location.href = 'test1.html?html=' + encodeURIComponent(htmlOutput);
+        });
 
         // Helper function to extract attribute value from a string
         function extractAttributeValue(content, attributeName) {
