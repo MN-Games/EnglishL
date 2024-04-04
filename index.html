@@ -28,7 +28,10 @@
                 'h': '<h3>{content}</h3>',
                 'small-h': '<h4>{content}</h4>',
                 'tx': '<p>{content}</p>',
-                'table': '<table>{content}</table>'
+                'table': '<table>{content}</table>',
+                'pic': '<img alt="{alt}" src="{src}">',
+                'link': '<a href="{url}">{content}</a>',
+                'embed': '<embed src="{href}"></embed>'
             };
 
             // Replace custom elements with HTML equivalents
@@ -37,17 +40,12 @@
                 if (elementMappings.hasOwnProperty(tag)) {
                     // Replace placeholders in the HTML equivalent with actual content
                     var htmlEquivalent = elementMappings[tag]
-                        .replace('{content}', content);
+                        .replace('{content}', content)
+                        .replace('{alt}', extractAttributeValue(content, 'alt'))
+                        .replace('{src}', extractAttributeValue(content, 'src'))
+                        .replace('{url}', extractAttributeValue(content, 'url')); // Use 'url' for the link element
+                        .replace('{href}', extractAttributeValue(content, 'href')); // Use 'href' for the embed element
                     return htmlEquivalent;
-                } else if (tag === 'pic') {
-                    // Handle <pic> element
-                    var alt = extractAttributeValue(content, 'alt');
-                    var src = extractAttributeValue(content, 'src');
-                    return '<img alt="' + alt + '" src="' + src + '">';
-                } else if (tag === 'link') {
-                    // Handle <link> element
-                    var url = extractAttributeValue(content, 'url');
-                    return '<a href="' + url + '">' + content + '</a>';
                 } else {
                     // If not mapped, return the original match
                     return match;
@@ -60,9 +58,9 @@
 
         // Helper function to extract attribute value from a string
         function extractAttributeValue(content, attributeName) {
-            var regex = new RegExp(attributeName + '="([^"]*)"');
+            var regex = new RegExp(attributeName + '="([^"]*)|(\'.+\')'); // Capture values in both double and single quotes
             var match = regex.exec(content);
-            return match ? match[1] : '';
+            return match ? match[1] : (match ? match[2] : ''); // Use captured value (including quotes)
         }
     </script>
 </body>
