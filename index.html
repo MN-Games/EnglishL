@@ -11,7 +11,33 @@
         <button type="submit">Parse</button>
     </form>
 
+    <popup></popup> <!-- Custom popup element -->
+
     <script>
+        // Custom popup element implementation
+        customElements.define('popup', class extends HTMLElement {
+            connectedCallback() {
+                this.innerHTML = `
+                    <button onclick="openPopup()">Open Popup</button>
+                    <div id="popup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; border: 1px solid black;">
+                        <h2 id="popupTitle">Popup Title</h2>
+                        <p id="popupContent">Popup Content</p>
+                        <button onclick="closePopup()">Close Popup</button>
+                    </div>
+                `;
+            }
+        });
+
+        // Function to open the popup
+        function openPopup() {
+            document.getElementById("popup").style.display = "block";
+        }
+
+        // Function to close the popup
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+
         document.getElementById('inputForm').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent form submission
 
@@ -20,6 +46,7 @@
 
             // Define a mapping of custom elements to their HTML equivalents
             var elementMappings = {
+                'popup': '<popup>{content}</popup>',
                 'header': '<header>{content}</header>',
                 'footer': '<footer>{content}</footer>',
                 'navigate': '<nav>{content}</nav>',
@@ -55,8 +82,8 @@
                 }
             });
 
-            // Redirect to test1.html with the HTML content as a query parameter
-            window.location.href = 'test1.html?html=' + encodeURIComponent(htmlOutput);
+            // Inject the parsed HTML into the custom popup element
+            document.querySelector('popup').innerHTML = htmlOutput;
         });
 
         // Helper function to extract attribute value from a string
