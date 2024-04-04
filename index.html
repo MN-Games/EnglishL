@@ -6,7 +6,7 @@
     <title>Custom Language Parser</title>
 </head>
 <body>
-    <textarea id="inputText" rows="10" cols="50"></textarea>
+    <textarea id="inputText" rows="10" cols="50">This is a [link url="https://example.com"]Example[/link] of custom language.</textarea>
     <button onclick="parseCustomLanguage()">Parse</button>
     <div id="output"></div>
 
@@ -17,25 +17,25 @@
 
             // Define a mapping of custom elements to their HTML equivalents
             var elementMappings = {
-                'header': '<header>{content}</header>',
-                'footer': '<footer>{content}</footer>',
-                'navigate': '<nav>{content}</nav>',
-                'main': '<main>{content}</main>',
-                'section': '<section>{content}</section>',
-                'meta-info': '<meta-info>{content}</meta-info>',
-                'link': '<a href="{url}">{content}</a>',
-                'big-h': '<h1>{content}</h1>',
-                'medium-h': '<h2>{content}</h2>',
-                'h': '<h3>{content}</h3>',
-                'small-h': '<h4>{content}</h4>',
-                'tx': '<p>{content}</p>',
-                'table': '<table>{content}</table>',
-                'pic': '<img alt="{alt}" src="{src}">',
-                'embed': '<embed src="{href}"></embed>'
+                'header': '[header]{content}[#]',
+                'footer': '[footer]{content}[#]',
+                'navigate': '[nav]{content}[#]',
+                'main': '[main]{content}[#]',
+                'section': '[section]{content}[#]',
+                'meta-info': '[meta-info]{content}[#]',
+                'link': '[a href="{url}"]{content}[#]',
+                'big-h': '[h1]{content}[#]',
+                'medium-h': '[h2]{content}[#]',
+                'h': '[h3]{content}[#]',
+                'small-h': '[h4]{content}[#]',
+                'tx': '[p]{content}[#]',
+                'table': '[table]{content}[#]',
+                'pic': '[img alt="{alt}" src="{src}"][#]',
+                'embed': '[embed src="{href}"][#]'
             };
 
             // Replace custom elements with HTML equivalents
-            var htmlOutput = inputText.replace(/<([^>]+)>(.*?)<\/\1>/g, function(match, tag, content) {
+            var htmlOutput = inputText.replace(/\[([^#\]]+)](.*?)\[#]/g, function(match, tag, content) {
                 // Check if the tag is mapped to an HTML equivalent
                 if (elementMappings.hasOwnProperty(tag)) {
                     // Replace placeholders in the HTML equivalent with actual content
