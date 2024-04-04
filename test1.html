@@ -3,69 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom Language Parser</title>
+    <title>Custom Language Parser - Test</title>
 </head>
 <body>
+    <div id="output"></div>
+
     <script>
-        // Define the EnglishL code as a JavaScript variable
-        var englishLCode = `
-            <header>This is a header</header>
-            <tx>This is a paragraph</tx>
-            <footer>This is a footer</footer>
-        `;
-
-        // Function to parse the EnglishL code and convert it to HTML
-        function parseEnglishLCode() {
-            // Define a mapping of custom elements to their HTML equivalents
-            var elementMappings = {
-                'header': '<header>{content}</header>',
-                'footer': '<footer>{content}</footer>',
-                'navigate': '<nav>{content}</nav>',
-                'main': '<main>{content}</main>',
-                'section': '<section>{content}</section>',
-                'meta-info': '<meta-info>{content}</meta-info>',
-                'link': '<a href="{url}">{content}</a>',
-                'big-h': '<h1>{content}</h1>',
-                'medium-h': '<h2>{content}</h2>',
-                'h': '<h3>{content}</h3>',
-                'small-h': '<h4>{content}</h4>',
-                'tx': '<p>{content}</p>',
-                'table': '<table>{content}</table>',
-                'pic': '<img alt="{alt}" src="{src}">',
-                'embed': '<embed src="{href}"></embed>'
-            };
-
-            // Replace custom elements with HTML equivalents
-            var htmlOutput = englishLCode.replace(/<([^>]+)>(.*?)<\/\1>/g, function(match, tag, content) {
-                // Check if the tag is mapped to an HTML equivalent
-                if (elementMappings.hasOwnProperty(tag)) {
-                    // Replace placeholders in the HTML equivalent with actual content
-                    var htmlEquivalent = elementMappings[tag]
-                        .replace('{content}', content)
-                        .replace('{url}', extractAttributeValue(content, 'url'))
-                        .replace('{alt}', extractAttributeValue(content, 'alt'))
-                        .replace('{src}', extractAttributeValue(content, 'src'))
-                        .replace('{href}', extractAttributeValue(content, 'href'));
-                    return htmlEquivalent;
-                } else {
-                    // If not mapped, return the original match
-                    return match;
-                }
-            });
-
-            // Display the HTML output
-            console.log(htmlOutput);
+        // Function to get the value of a query parameter
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
         }
 
-        // Helper function to extract attribute value from a string
-        function extractAttributeValue(content, attributeName) {
-            var regex = new RegExp(attributeName + '="([^"]*)"');
-            var match = regex.exec(content);
-            return match ? match[1] : '';
-        }
+        // Retrieve the HTML content from the query parameter
+        var htmlContent = getQueryParam('html');
 
-        // Call the parse function when the page loads
-        parseEnglishLCode();
+        // Display the HTML content
+        document.getElementById('output').innerHTML = htmlContent;
     </script>
 </body>
 </html>
