@@ -6,7 +6,7 @@
     <title>Custom Language Parser</title>
 </head>
 <body>
-    <textarea id="inputText" rows="10" cols="50">This is a [link url="https://example.com"]Example[/link] of custom language.</textarea>
+    <textarea id="inputText" rows="10" cols="50"></textarea>
     <button onclick="parseCustomLanguage()">Parse</button>
     <div id="output"></div>
 
@@ -31,11 +31,11 @@
                 'tx': '<p>{content}</p>',
                 'table': '<table>{content}</table>',
                 'pic': '<img alt="{alt}" src="{src}">',
-                'embed': '<embed src="{href}">'
+                'embed': '<embed src="{href}"></embed>'
             };
 
             // Replace custom elements with HTML equivalents
-            var htmlOutput = inputText.replace(/\[([^\]]+)](.*?)\[#]/g, function(match, tag, content) {
+            var htmlOutput = inputText.replace(/<([^>]+)>(.*?)<\/\1>/g, function(match, tag, content) {
                 // Check if the tag is mapped to an HTML equivalent
                 if (elementMappings.hasOwnProperty(tag)) {
                     // Replace placeholders in the HTML equivalent with actual content
