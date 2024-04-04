@@ -1,73 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EnglishL Compiler</title>
-<style>
-  /* CSS styles for the preview section */
-  #preview {
-    border: 1px solid #ccc;
-    padding: 20px;
-    margin-top: 20px;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Language Parser</title>
 </head>
 <body>
-  <h1>EnglishL Compiler</h1>
-  
-  <!-- Form for inputting EnglishL-like code -->
-  <form id="englishlForm">
-    <label for="englishlCode">Enter EnglishL-like code:</label><br>
-    <textarea id="englishlCode" rows="5" cols="50"></textarea><br>
-    <button type="submit">Compile</button>
-  </form>
+    <textarea id="inputText" rows="10" cols="50"></textarea>
+    <button onclick="parseCustomLanguage()">Parse</button>
+    <div id="output"></div>
 
-  <!-- Preview section for displaying generated HTML content -->
-  <div id="preview">
-    <!-- Generated HTML content will be displayed here -->
-  </div>
+    <script>
+        function parseCustomLanguage() {
+            // Get the input text
+            var inputText = document.getElementById('inputText').value;
 
-  <!-- JavaScript for handling form submission and updating preview -->
-  <script>
-    document.getElementById('englishlForm').addEventListener('submit', function(event) {
-      event.preventDefault(); // Prevent default form submission
-      
-      // Get EnglishL-like code from textarea
-      var englishlCode = document.getElementById('englishlCode').value;
+            // Define a mapping of custom elements to their HTML equivalents
+            var elementMappings = {
+                'header': '<header>{content}</header>',
+                'footer': '<footer>{content}</footer>',
+                'navigate': '<nav>{content}</nav>',
+                'main': '<main>{content}</main>',
+                'section': '<section>{content}</section>',
+                'meta-info': '<meta-info>{content}</meta-info>',
+                'link': '<a href="{url}">{content}</a>',
+                'big-h': '<h1>{content}</h1>',
+                'medium-h': '<h2>{content}</h2>',
+                'h': '<h3>{content}</h3>',
+                'small-h': '<h4>{content}</h4>',
+                'tx': '<p>{content}</p>',
+                'table': '<table>{content}</table>',
+                'pic': '<img alt="{alt}" src="{src}">',
+                'embed': '<embed src="{href}"></embed>'
+            };
 
-      // Parse EnglishL-like code and generate HTML
-      var htmlContent = parseEnglishL(englishlCode);
+            // Replace custom elements with HTML equivalents
+            var htmlOutput = inputText.replace(/<([^>]+)>(.*?)<\/\1>/g, function(match, tag, content) {
+                // Check if the tag is mapped to an HTML equivalent
+                if (elementMappings.hasOwnProperty(tag)) {
+                    // Replace placeholders in the HTML equivalent with actual content
+                    var htmlEquivalent = elementMappings[tag]
+                        .replace('{content}', content)
+                        .replace('{url}', extractAttributeValue(content, 'url'))
+                        .replace('{alt}', extractAttributeValue(content, 'alt'))
+                        .replace('{src}', extractAttributeValue(content, 'src'))
+                        .replace('{href}', extractAttributeValue(content, 'href'));
+                    return htmlEquivalent;
+                } else {
+                    // If not mapped, return the original match
+                    return match;
+                }
+            });
 
-      // Update preview section with generated HTML content
-      document.getElementById('preview').innerHTML = htmlContent;
-    });
-
-    // Function to parse EnglishL-like code and generate HTML
-    function parseEnglishL(englishlCode) {
-      // Regular expression patterns for different elements
-      var elementPatterns = {
-        'header': /<header>([\s\S]*?)<\/header>/g,
-        'footer': /<footer>([\s\S]*?)<\/footer>/g,
-        // Add more element patterns as needed
-      };
-
-      // HTML content generated from EnglishL-like code
-      var htmlContent = '';
-
-      // Parse each element using regular expressions
-      Object.keys(elementPatterns).forEach(function(elementName) {
-        var pattern = elementPatterns[elementName];
-        var matches = englishlCode.match(pattern);
-        if (matches) {
-          matches.forEach(function(match) {
-            htmlContent += '<div class="' + elementName + '">' + match + '</div>';
-          });
+            // Display the HTML output
+            document.getElementById('output').innerHTML = htmlOutput;
         }
-      });
 
-      return htmlContent;
-    }
-  </script>
+        // Helper function to extract attribute value from a string
+        function extractAttributeValue(content, attributeName) {
+            var regex = new RegExp(attributeName + '="([^"]*)"');
+            var match = regex.exec(content);
+            return match ? match[1] : '';
+        }
+    </script>
 </body>
 </html>
