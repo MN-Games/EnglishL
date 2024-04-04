@@ -23,7 +23,6 @@
                 'main': '<main>{content}</main>',
                 'section': '<section>{content}</section>',
                 'meta-info': '<meta-info>{content}</meta-info>',
-                'link': '<a href="{url}">{content}</a>',
                 'big-h': '<h1>{content}</h1>',
                 'medium-h': '<h2>{content}</h2>',
                 'h': '<h3>{content}</h3>',
@@ -41,10 +40,9 @@
                     // Replace placeholders in the HTML equivalent with actual content
                     var htmlEquivalent = elementMappings[tag]
                         .replace('{content}', content)
-                        .replace('{url}', extractAttributeValue(content, 'url'))
                         .replace('{alt}', extractAttributeValue(content, 'alt'))
                         .replace('{src}', extractAttributeValue(content, 'src'))
-                        .replace('{href}', extractAttributeValue(content, 'href'));
+                        .replace('{href}', extractAttributeValue(content, 'url')); // Use 'url' for the link element
                     return htmlEquivalent;
                 } else {
                     // If not mapped, return the original match
