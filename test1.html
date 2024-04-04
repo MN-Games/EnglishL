@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnglishL Example</title>
+    <!-- Include the EnglishL parsing script from the CDN -->
+    <script src="https://cdn.jsdelivr.net/gh/MN-Games/EnglishL@main/englishl.js"></script>
+</head>
+<body>
+    <!-- Example EnglishL code -->
+    <div data-englishl="[tx]This is a paragraph[/tx]"></div>
+    <div data-englishl="[link url='https://example.com']Example link[/link]">
+    <div data-englishl="[pic src='example.jpg' alt='Example image']"></div>
+
+    <script>
+        // Automatically parse EnglishL elements when the document is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            EnglishL.parse();
+        });
+    </script>
+</body>
+</html>
